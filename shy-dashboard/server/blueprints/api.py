@@ -2,6 +2,7 @@ from flask import (
     Blueprint,
     jsonify
 )
+from helpers.quickResponses import QuickResponses
 
 blueprint = Blueprint(
     "API", 
@@ -9,10 +10,6 @@ blueprint = Blueprint(
     url_prefix="/api"
 )
 
-@blueprint.route("/test")
+@blueprint.route("/ping")
 def testEndpoint():
-    return jsonify(
-        {
-            "status" : 200
-        }
-    )
+    return QuickResponses.pong()
