@@ -1,0 +1,48 @@
+datasource db {
+    provider = "postgresql"
+    url = env("DATABASE_URL")
+}
+
+generator client {
+    provider = "prisma-client-py"
+}
+
+model User {
+    user        BigInt              @id
+    gold        Int                 @default(0)
+    pronouns    String?
+    items       InventoryItems[]
+    cooldowns   Cooldowns[]
+    health      Int                 @default(20)
+    experience  Float               @default(0.0)
+}
+
+model ItemReference {
+    id          Int                 @id @default(autoincrement())
+    name        String
+    function    String?
+    funcArgs    String[]
+    value       Int                 @default(0)
+    holdings    InventoryItems[]
+}
+
+model InventoryItems {
+    id          Int                 @id @default(autoincrement())
+    user_id     BigInt
+    user        User                @relation(fields: [user_id], references: [user])   
+    quantity    Int                 @default(0)
+    item_ref_id Int     
+    item        ItemReference       @relation(fields: [item_ref_id], references: [id])
+    modifiers   Int[]
+}
+
+// Cooldowns which are used for commands/other functions.
+// This way long cooldowns can be retained over a long period of time when needed.
+model Cooldowns {
+    id          Int                 @id @default(autoincrement())
+    title       String
+    user_id     BigInt
+    user        User                @relation(fields: [user_id], references: [user])
+    length      Int                 
+    started     DateTime            @default(now())
+}
