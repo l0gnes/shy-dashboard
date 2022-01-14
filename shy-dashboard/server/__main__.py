@@ -1,6 +1,7 @@
-from pydoc import resolve
 from flask import Flask
 from flask_cors import CORS
+
+from prisma import Client, register
 
 from blueprints import (
     api
@@ -11,6 +12,9 @@ CORS(
     app,
     resources = {r'/*' : {'origins' : '*'}}
 )
+
+app.prisma = Client()
+register(app.prisma)
 
 app.register_blueprint(api.blueprint)
 
