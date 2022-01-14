@@ -18,3 +18,12 @@ class QuickResponses(object):
                 "message" : "Pong!"
             }
         )
+
+    @staticmethod
+    def userAlreadyExists() -> Response:
+        return jsonify(
+            {
+                "status" : 400,
+                "message" : "User already exists"
+            }
+        )
