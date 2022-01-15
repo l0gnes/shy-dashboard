@@ -1,10 +1,9 @@
-from flask import (
+from quart import (
     Blueprint,
     jsonify,
     request,
     current_app
 )
-from itsdangerous import json
 from helpers.quickResponses import QuickResponses
 
 from helpers.converters import UserFormatter
@@ -29,12 +28,12 @@ async def userEndpoint(userid : int = None):
 
     if request.method == "GET":
 
-        async with current_app.prisma:
-            userData = await User.prisma().find_first(
-                where = {
-                    'user' : userid
-                }
-            )
+       
+        userData = await User.prisma().find_first(
+            where = {
+                'user' : userid
+            }
+        )
 
         return jsonify(
             UserFormatter.convert(
@@ -46,21 +45,21 @@ async def userEndpoint(userid : int = None):
 
         userid = request.json['userid']
 
-        async with current_app.prisma:
-            existenceCheck = await User.prisma().find_first(
-                where = {
-                    "user" : userid
-                }
-            )
+        
+        existenceCheck = await User.prisma().find_first(
+            where = {
+                "user" : userid
+            }
+        )
 
         if not existenceCheck:
 
-            async with current_app.prisma:
-                newUser = await User.prisma().create(
-                    data = {
-                        "user" : userid 
-                    }
-                )
+            
+            newUser = await User.prisma().create(
+                data = {
+                    "user" : userid 
+                }
+            )
 
             return jsonify(
                 UserFormatter.convert(
