@@ -7,7 +7,7 @@ from flask import (
 from itsdangerous import json
 from helpers.quickResponses import QuickResponses
 
-from helpers.userHandler import UserFormatter
+from helpers.converters import UserFormatter
 
 from prisma.models import (
     User
