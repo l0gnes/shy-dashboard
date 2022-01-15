@@ -44,7 +44,7 @@ async def userEndpoint(userid : int = None):
 
     elif request.method == "POST":
 
-        userid = request.args['userid']
+        userid = request.json['userid']
 
         async with current_app.prisma:
             existenceCheck = await User.prisma().find_first(

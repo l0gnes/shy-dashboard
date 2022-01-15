@@ -10,7 +10,7 @@ generator client {
 model User {
     user        BigInt              @id
     gold        Int                 @default(0)
-    pronouns    String?
+    pronouns    String[]
     items       InventoryItems[]
     cooldowns   Cooldowns[]
     health      Int                 @default(20)
