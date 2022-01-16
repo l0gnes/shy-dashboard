@@ -8,6 +8,6 @@ class UserFormatter(object):
             "userid" : user.user,
             "gold" : user.gold,
             "health" : user.health,
-            "pronoums" : user.pronouns,
+            "pronouns" : user.pronouns,
             "experience" : user.experience
         }
