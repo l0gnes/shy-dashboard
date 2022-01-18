@@ -15,6 +15,25 @@ model User {
     cooldowns   Cooldowns[]
     health      Int                 @default(20)
     experience  Float               @default(0.0)
+    fishing     FishingData?
+}
+
+model FishingData {
+    user_id     BigInt              @id
+    user        User                @relation(fields: [user_id], references: [user])
+    experience  Float               @default(0.0)
+    caught      Int                 @default(0)
+    rod_id      Int                 @default(0)
+    rod         FishingRod          @relation(fields: [rod_id], references: [id])
+}
+
+model FishingRod {
+    id          Int                 @id @default(autoincrement())
+    name        String
+    desc        String?
+    holders     FishingData[]
+    fish_power  Int
+    luck        Float               @default(1.0)
 }
 
 model ItemReference {
